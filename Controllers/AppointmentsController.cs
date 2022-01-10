@@ -41,6 +41,7 @@ namespace DoctorAppointment.Controllers
         {
             ViewBag.docid = new SelectList(db.doctror, "id", "name");
             ViewBag.ptid = new SelectList(db.patient, "id", "name");
+            ViewBag.slots = new List<SelectListItem>() { new SelectListItem { Text = "Select", Value = "Select" } };
             return View();
         }
 
@@ -71,8 +72,25 @@ namespace DoctorAppointment.Controllers
                 slottimes += fn+"-"+sn+",";
             }
             slottimes = slottimes.TrimEnd(',');
-            return Json(slots, JsonRequestBehavior.AllowGet);
+            string[] sss = slottimes.Split(',');
+            List<Slots> sli = new List<Slots>();
+            foreach (string i in sss)
+            {
+                Slots s = new Slots();
+                s.id = i;
+                s.name = i;
+                sli.Add(s);
+            }
+            //var slotlistdetails = new SelectList(sli, "name", "name");
 
+            return Json(sli, JsonRequestBehavior.AllowGet);
+
+        }
+
+       public class Slots
+        {
+            public string id { get; set; }
+            public string name { get; set; }
         }
         // POST: Appointments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
