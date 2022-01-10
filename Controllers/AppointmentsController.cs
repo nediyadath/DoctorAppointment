@@ -41,7 +41,7 @@ namespace DoctorAppointment.Controllers
         {
             ViewBag.docid = new SelectList(db.doctror, "id", "name");
             ViewBag.ptid = new SelectList(db.patient, "id", "name");
-            ViewBag.slots = new List<SelectListItem>() { new SelectListItem { Text = "Select", Value = "Select" } };
+            ViewBag.appSlot = new List<SelectListItem>() { new SelectListItem { Text = "Select", Value = "Select" } };
             return View();
         }
 

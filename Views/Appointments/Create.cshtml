@@ -10,8 +10,15 @@
 <script>
     $(document).ready(function () {
         var url = '@Url.Action("GetAppointment")';
-        var slotli = $("#slots");
+        var slotli = $("#appSlot");
+        $("#ptid").change(function () {
+            $("#doc").show();
+        });
+        $("#docid").change(function () {
+            $("#date").show();
+        })
         $("#appDate").mouseout(function () {
+            $("#slot").show();
             var dt = $(this).val();
             var doc = $("#docid").val();
 
@@ -26,10 +33,10 @@
     })
 </script>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Appointment</h4>
         <hr />
@@ -37,39 +44,40 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ptid, "ptid", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ptid", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("ptid", null, "Select", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ptid, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="doc" style="display:none">
             @Html.LabelFor(model => model.docid, "docid", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("docid", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("docid", null, "Select", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.docid, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="date" style="display:none">
             @Html.LabelFor(model => model.appDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.appDate, new { htmlAttributes = new { @class = "form-control",@type="date", @id="appDate" } })
+                @Html.EditorFor(model => model.appDate, new { htmlAttributes = new { @class = "form-control", @type = "date", @id = "appDate" } })
                 @Html.ValidationMessageFor(model => model.appDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.appSlot, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("slots",null,"Select", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.appSlot, "", new { @class = "text-danger" })
+        <div id="slot" style="display:none">
+            <div class="form-group">
+                @Html.LabelFor(model => model.appSlot, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("appSlot", null, "Select", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.appSlot, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
             </div>
         </div>
     </div>
